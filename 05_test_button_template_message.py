@@ -19,7 +19,8 @@ line_bot_api = LineBotApi('Channel access token')
 handler = WebhookHandler('Channel secret')
 
 # 推給你自己 
-line_bot_api.push_message('Your user ID ', TextSendMessage(text='(後臺訊息)啟動豆芽探索共學
+line_bot_api.push_message('Your user ID ', TextSendMessage(text='(後臺訊息)啟動豆芽探索共學ECHO機器人!'))
+
 
 # 推給某個User
 # line_bot_api.push_message('UserID', TextSendMessage(text='(後臺訊息)啟動豆芽探索共學ECHO機器人!'))
