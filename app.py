@@ -60,7 +60,7 @@ def handle_message(event):
             profile = line_bot_api.get_profile(user_id)
         except LineBotApiError as e:
             print('get_profile error')
-            pass
+
             msg_ = '你的帳號是: '+profile.display_name + '你的ID是: '+user_id+'你的大頭貼網址是: '+picture_url+'你的使用者自介內容是: '+profile.status_message
         line_bot_api.push_message(
              user_id,
