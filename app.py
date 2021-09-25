@@ -46,7 +46,7 @@ def handle_message(event):
     user_id = event.source.user_id
     print("user_id =", user_id)
     
-    reply_msg = event.message.text+'\nyour User ID is '+user_id+' 輸入「你好」會啟動reply_message回復「不錯喔」，輸入「發訊息給我」會啟動push_message由機器人主動發訊息給使用者'
+    reply_msg = event.message.text+'\nyour User ID is '+user_id+' 輸入「你好」會啟動reply_message回復「不錯喔」，輸入「發訊息給我」會啟動push_message由機器人主動發訊息給使用者，「我是誰」'
     
     if event.message.text=='你好':
         line_bot_api.reply_message(
@@ -56,6 +56,7 @@ def handle_message(event):
         line_bot_api.push_message(
            user_id,
            TextSendMessage(text='這個訊息是基於ID主動發出的(push_message)'))
+    if event.message.text=='我是誰':
         profile = line_bot_api.get_profile(user_id)
         msg_ = '你的帳號是: '+ profile.display_name + '\n你的ID是: '+user_id+'\n你的大頭貼網址是: '+picture_url+'\n你的使用者自介內容是: '+profile.status_message
         line_bot_api.push_message(
