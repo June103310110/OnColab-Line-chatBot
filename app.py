@@ -18,7 +18,7 @@ handler = WebhookHandler('c220d0e085bf26cf5dba48f2eccf928e')
 # 推給你自己 
 line_bot_api.push_message('U5eb2d6c5020d6fe62e4f1d1e0f15e406', TextSendMessage(text='(後臺訊息)啟動豆芽探索共學ECHO機器人!'))
 # 推給某個User
-# line_bot_api.push_message('UserID', TextSendMessage(text='歡迎使用豆芽探索共學ECHO機器人'))
+# line_bot_api.push_message('UserID', TextSendMessage(text='(後臺訊息)啟動豆芽探索共學ECHO機器人!'))
 
 
 @app.route("/callback", methods=['POST'])
@@ -46,29 +46,20 @@ def handle_message(event):
     user_id = event.source.user_id
     print("user_id =", user_id)
     
-    reply_msg = event.message.text+'\nyour User ID is '+user_id+'\n輸入「你好」會啟動reply_message回復「不錯喔」，輸入「發訊息給我」會啟動push_message由機器人主動發訊息給使用者'
+    reply_msg = event.message.text+'\nyour User ID is '+user_id+' 輸入「你好」會啟動reply_message回復「不錯喔」，輸入「發訊息給我」會啟動push_message由機器人主動發訊息給使用者'
     
     if event.message.text=='你好':
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text='不錯喔，試試看其他訊息吧'))
+            TextSendMessage(text='不錯喔'))
     if event.message.text=='發訊息給我':
-        line_bot_api.push_message(
-            user_id
-            TextSendMessage(text='這個訊息是基於ID主動發出的(push_message)'))
-#         try:
-#             profile = line_bot_api.get_profile(user_id)
-#         except LineBotApiError as e:
-#             print('get_profile error')
-#             pass
-#             msg_ = '你的帳號是: '+profile.display_name + '你的ID是: '+user_id+'你的大頭貼網址是: '+picture_url+'你的使用者自介內容是: '+profile.status_message
-#         line_bot_api.push_message(
-#              user_id,
-#              TextSendMessage(text=msg_))
-    else:
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=reply_msg))
+         line_bot_api.push_message(
+           user_id,
+           TextSendMessage(text='這個訊息是基於ID主動發出的(push_message)'))
+      
+    line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text=reply_msg))
 
 import os
 if __name__ == "__main__":
