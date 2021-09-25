@@ -46,20 +46,20 @@ def handle_message(event):
     user_id = event.source.user_id
     print("user_id =", user_id)
     
-    reply_msg = event.message.text+'\nyour User ID is '+user_id+' 輸入「你好」會啟動reply_message回復「不錯喔」，輸入「發訊息給我」會啟動push_message由機器人主動發訊息給使用者'
+    reply_msg = event.message.text+'\nyour User ID is '+user_id+'\n輸入「你好」會啟動reply_message回復「不錯喔」，輸入「發訊息給我」會啟動push_message由機器人主動發訊息給使用者'
     
     if event.message.text=='你好':
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text='不錯喔'))
+            TextSendMessage(text='不錯喔，試試看其他訊息吧'))
     if event.message.text=='發訊息給我':
          line_bot_api.push_message(
            user_id,
            TextSendMessage(text='這個訊息是基於ID主動發出的(push_message)'))
-      
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=reply_msg))
+    else:
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=reply_msg))
 
 import os
 if __name__ == "__main__":
