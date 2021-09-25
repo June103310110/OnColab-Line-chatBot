@@ -36,7 +36,7 @@ def handle_message(event):
     print("user_id =", user_id)
 
     reply_msg = event.message.text+'\nyour User ID is '+user_id+' 輸入「你好」會啟動reply_message回復「不錯喔」，輸入「發訊息給我」會啟動push_message由機器人主動發訊息給使用者'
-    reply_msg = event.message.text+'\nyour User ID is '+user_id+'\n輸入「你好」會啟動reply_message回復「不錯喔」，輸入「發訊息給我」會啟動push_message由機器人主動發訊息給使用者'
+
 
     if event.message.text=='你好':
         line_bot_api.reply_message(
