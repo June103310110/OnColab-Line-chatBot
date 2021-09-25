@@ -46,22 +46,32 @@ def handle_message(event):
     user_id = event.source.user_id
     print("user_id =", user_id)
     
-    reply_msg = event.message.text+'\nyour User ID is '+user_id+' 輸入「你好」會啟動reply_message回復「不錯喔」，輸入「發訊息給我」會啟動push_message由機器人主動發訊息給使用者'
+    reply_msg = event.message.text+'\nyour User ID is '+user_id+\
+                    ' \n輸入「你好」會啟動reply_message回復「不錯喔」，\
+                    \n輸入「發訊息給我」會啟動push_message由機器人主動發訊息給使用者，\
+                    \n輸入「我是誰」會調用get_profile取得身分並回覆使用者訊息'
     
     if event.message.text=='你好':
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text='不錯喔'))
     if event.message.text=='發訊息給我':
-         line_bot_api.push_message(
+        line_bot_api.push_message(
            user_id,
            TextSendMessage(text='這個訊息是基於ID主動發出的(push_message)'))
-      
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=reply_msg))
+    if event.message.text=='我是誰':
+        profile = line_bot_api.get_profile(user_id)
+        msg_ = '你的帳號是: '+ profile.display_name + '\n你的ID是: '+profile.user_id+'\n你的大頭貼網址是: '\
+                    +profile.picture_url+'\n你的使用者自介內容是: '+profile.status_message
+        line_bot_api.push_message(
+             user_id,
+             TextSendMessage(text=msg_))
+    else:
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=reply_msg))
 
 import os
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port)
+    app.run(host='127.0.0.1', port=port)
