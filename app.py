@@ -4,12 +4,14 @@ from linebot import (
     LineBotApi, WebhookHandler
 )
 from linebot.exceptions import (
-    InvalidSignatureError
+    InvalidSignatureError, LineBotApiError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage,
+    MessageEvent, TextMessage, TextSendMessage, ImageSendMessage, Video, ExternalLink
 )
 
+# from linebot.models import ImagemapSendMessage, BaseSize, URIImagemapAction, MessageImagemapAction, ImagemapArea
+from linebot.models import TemplateSendMessage, ButtonsTemplate, PostbackTemplateAction, MessageTemplateAction, URITemplateAction
 app = Flask(__name__)
 
 line_bot_api = LineBotApi('F3wxw5f1SzY7d5DgxkJPwW5qdVWI/iDCZ0+Kj/OHvrviNYBd2WH+qm8rLANu/x/xsLXRijx5qR/NTDfBrCJtukltAum5r3SP2hX5ClN8A671UjlUiqisf1SlaWH4Wom1FKibFtLcdV4rLyzK0aZSmQdB04t89/1O/w1cDnyilFU=')
@@ -40,62 +42,61 @@ def callback():
     return 'OK'
 
 
+button_template_message =ButtonsTemplate(
+                        thumbnail_image_url="https://i.imgur.com/d3vfgZP.png",
+                        title='Menu', 
+                        text='Please select',
+                        ratio="1.51:1",
+                        image_size="cover",
+                        actions=[
+#                                PostbackTemplateAction 點擊選項後，
+#                                 除了文字會顯示在聊天室中，
+#                                 還回傳data中的資料，可
+#                                 此類透過 Postback event 處理。
+#                             PostbackTemplateAction(
+#                                 label='postback 回發訊息data參數會被回傳到', 
+#                                 text='postback text',
+#                                 data='action=buy&itemid=1'
+#                             ),
+                            MessageTemplateAction(
+                                label='message會回傳你好', text='你好'
+                            ),
+                            URITemplateAction(
+                                label='uri可回傳網址', uri='https://hackmd.io/DPLQVfzFS3yAs4ZcpY56NQ?view'
+                            )
+                        ]
+                    )
+
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
       # get user id when reply
     user_id = event.source.user_id
     print("user_id =", user_id)
     
-    reply_msg = event.message.text+'\nyour User ID is '+user_id+' 輸入「你好」會啟動reply_message回復「不錯喔」，輸入「發訊息給我」會啟動push_message由機器人主動發訊息給使用者，「我是誰」'
+    reply_msg = event.message.text+'\nyour User ID is '+user_id+\
+                    ' \n輸入「你好」會啟動reply_message回復「不錯喔」'
     
     if event.message.text=='你好':
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text='不錯喔'))
-    if event.message.text=='發訊息給我':
-        line_bot_api.push_message(
-           user_id,
-           TextSendMessage(text='這個訊息是基於ID主動發出的(push_message)'))
-    if event.message.text=='我是誰':
-        profile = line_bot_api.get_profile(user_id)
-        msg_ = '你的帳號是: '+ profile.display_name + '\n你的ID是: '+user_id+'\n你的大頭貼網址是: '+picture_url+'\n你的使用者自介內容是: '+profile.status_message
-        line_bot_api.push_message(
-             user_id,
-             TextSendMessage(text=msg_))
-
+        
     else:
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=reply_msg))
+        try:
+    #     alt_text 因template只能夠在手機上顯示，因此在PC版會使用alt_Text替代
+            line_bot_api.push_message(user_id, TemplateSendMessage(alt_text="Template Example", 
+                                                                   template=button_template_message))
+        except LineBotApiError as e:
+            # error handle
+            raise e
+
+        
+        
 
 import os
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
-#
-    
-#     if event.message.text=='你好':
-#         line_bot_api.reply_message(
-#             event.reply_token,
-#             TextSendMessage(text='不錯喔，試試看其他訊息吧'))
-#     if event.message.text=='發訊息給我':
-#         line_bot_api.push_message(
-#             user_id
-#             TextSendMessage(text='這個訊息是基於ID主動發出的(push_message)'))
-#         try:
-#             profile = line_bot_api.get_profile(user_id)
-#             msg_ = '你的帳號是: '+profile.display_name + '\n你的ID是: '+user_id+'\n你的大頭貼網址是: '+picture_url+'\n你的使用者自介內容是: '+profile.status_message
-#             line_bot_api.push_message(
-#                  user_id,
-#                  TextSendMessage(text=msg_))
-#         except LineBotApiError as e:
-#             print('get_profile error')
-
-#     else:
-#         line_bot_api.reply_message(
-#             event.reply_token,
-#             TextSendMessage(text=reply_msg))
-# import os
-# if __name__ == "__main__":
-#     port = int(os.environ.get('PORT', 5000))
-#     app.run(host='0.0.0.0', port=port)
