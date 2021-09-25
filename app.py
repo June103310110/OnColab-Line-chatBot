@@ -15,6 +15,11 @@ app = Flask(__name__)
 line_bot_api = LineBotApi('F3wxw5f1SzY7d5DgxkJPwW5qdVWI/iDCZ0+Kj/OHvrviNYBd2WH+qm8rLANu/x/xsLXRijx5qR/NTDfBrCJtukltAum5r3SP2hX5ClN8A671UjlUiqisf1SlaWH4Wom1FKibFtLcdV4rLyzK0aZSmQdB04t89/1O/w1cDnyilFU=')
 handler = WebhookHandler('c220d0e085bf26cf5dba48f2eccf928e')
 
+# 推給你自己 
+line_bot_api.push_message('U5eb2d6c5020d6fe62e4f1d1e0f15e406', TextSendMessage(text='你可以開始了'))
+# 推給某個User
+# line_bot_api.push_message('UserID', TextSendMessage(text='你可以開始了'))
+
 
 @app.route("/callback", methods=['POST'])
 def callback():
