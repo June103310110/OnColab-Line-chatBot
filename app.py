@@ -56,10 +56,10 @@ def handle_message(event):
         line_bot_api.push_message(
            user_id,
            TextSendMessage(text='這個訊息是基於ID主動發出的(push_message)'))
-        
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=reply_msg))
+    else:
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=reply_msg))
 
 import os
 if __name__ == "__main__":
