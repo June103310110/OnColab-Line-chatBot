@@ -53,7 +53,7 @@ def handle_message(event):
             event.reply_token,
             TextSendMessage(text='不錯喔'))
     if event.message.text=='發訊息給我':
-         line_bot_api.push_message(
+        line_bot_api.push_message(
            user_id,
            TextSendMessage(text='這個訊息是基於ID主動發出的(push_message)'))
         
