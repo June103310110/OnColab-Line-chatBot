@@ -45,12 +45,11 @@ def handle_message(event):
         line_bot_api.push_message(
             user_id
             TextSendMessage(text='這個訊息是基於ID主動發出的(push_message)'))
-        try:
-            profile = line_bot_api.get_profile(user_id)
-        except LineBotApiError as e:
-            print('get_profile error')
-
-            msg_ = '你的帳號是: '+profile.display_name + '\n你的ID是: '+user_id+'\n你的大頭貼網址是: '+picture_url+'\n你的使用者自介內容是: '+profile.status_message
+#         try:
+        profile = line_bot_api.get_profile(user_id)
+#         except LineBotApiError as e:
+#             print('get_profile error')
+        msg_ = '你的帳號是: '+profile.display_name + '\n你的ID是: '+user_id+'\n你的大頭貼網址是: '+picture_url+'\n你的使用者自介內容是: '+profile.status_message
         line_bot_api.push_message(
              user_id,
              TextSendMessage(text=msg_))
