@@ -11,12 +11,12 @@ from linebot.models import (
 )
 
 app = Flask(__name__)
-
 line_bot_api = LineBotApi('Channel access token')
 handler = WebhookHandler('Channel secret')
 
 # 推給你自己 
-line_bot_api.push_message('U5eb2d6c5020d6fe62e4f1d1e0f15e406', TextSendMessage(text='(後臺訊息)啟動豆芽探索共學ECHO機器人!'))
+line_bot_api.push_message('Your user ID ', TextSendMessage(text='(後臺訊息)啟動豆芽探索共學ECHO機器人!'))
+
 # 推給某個User
 # line_bot_api.push_message('UserID', TextSendMessage(text='(後臺訊息)啟動豆芽探索共學ECHO機器人!'))
 
