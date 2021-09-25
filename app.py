@@ -16,7 +16,7 @@ line_bot_api = LineBotApi('F3wxw5f1SzY7d5DgxkJPwW5qdVWI/iDCZ0+Kj/OHvrviNYBd2WH+q
 handler = WebhookHandler('c220d0e085bf26cf5dba48f2eccf928e')
 
 # 推給你自己 
-line_bot_api.push_message('U5eb2d6c5020d6fe62e4f1d1e0f15e406', TextSendMessage(text='你可以開始了'))
+line_bot_api.push_message('U5eb2d6c5020d6fe62e4f1d1e0f15e406', TextSendMessage(text='歡迎使用豆芽探索共學ECHO機器人'))
 # 推給某個User
 # line_bot_api.push_message('UserID', TextSendMessage(text='歡迎使用豆芽探索共學ECHO機器人'))
 
