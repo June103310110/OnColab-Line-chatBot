@@ -1,5 +1,5 @@
-# heroku-chatBot
-
+# OnColab-chatBot 
+#### Readme這邊都是colab連結，如果要部屬到gcp/heroku請用上面的程式碼
 ### 如何使用colab測試Line chatbot
 ```
 !pip install flask
