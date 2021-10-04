@@ -19,3 +19,5 @@ https://colab.research.google.com/drive/1WA8uW7230He77jyzZcS6ijVLPj64cBid?hl=zh-
   - [範例連結](https://colab.research.google.com/drive/1OhgmCpUblTxximffTfmRGx7Ghb6ZjOZQ?hl=zh-tw#scrollTo=Lmazs04mRIQl)
 - 回傳圖片
   - [範例連結](https://colab.research.google.com/drive/1Z7Zq2TKwWXRAhsv8WzKN5HKVGNEeN9b6?hl=zh-tw#scrollTo=Lmazs04mRIQl) 
+- 瘦身助理
+  - [範例連結](https://colab.research.google.com/drive/13k5Ouw2WZMdOx3_xN9qEs_bXjYGaxCXT?hl=zh-tw#scrollTo=CMOocpugWgce)
