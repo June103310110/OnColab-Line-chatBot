@@ -32,5 +32,5 @@ https://colab.research.google.com/drive/1WA8uW7230He77jyzZcS6ijVLPj64cBid?hl=zh-
   - [範例連結](https://colab.research.google.com/drive/1FaJTsjW-SorDXRQzehIesSA-t2gXU_Ly?hl=en#scrollTo=Lmazs04mRIQl)
 - V1_June_馬偕護專_吃藥
   - [範例連結](https://colab.research.google.com/drive/1tecJS_E_shmb0cKcENm_9GLnaxPOP2ML?hl=en#scrollTo=Lmazs04mRIQl)
-- V1_ChatBot圖片收集診斷
+- V1_ChatBot影像資訊診斷
   - [範例連結](https://colab.research.google.com/drive/1TjeI6C1Qfv9LksSOg-IrHRYsi2Zwzq0W?hl=zh-tw#scrollTo=Lmazs04mRIQl)
