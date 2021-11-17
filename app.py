@@ -77,7 +77,7 @@ def handle_message(event):
         key = '我的卡號'
     if key == '我的卡號':
         if user_name in df.profileName.values:
-            user_card = df[df['profileName'] == user_name]['card'][0]
+            user_card = df[df['profileName'] == user_name]['card'].values[0]
             msg = user_name+':'+str(user_card)
             line_bot_api.push_message(user_id, TextSendMessage(text=msg)) 
             key = None
@@ -91,7 +91,7 @@ def handle_message(event):
 
         if user_name in df['profileName'].values:
             index = df[df['profileName'] == user_name]
-            user_card = df[df['profileName'] == user_name]['card'][0]
+            user_card = df[df['profileName'] == user_name]['card'].values[0]
         
             result = os.popen("curl -X POST 'https://class.aiacademy.tw/enter_logs/ajax_logs2.php'\
               --data-raw 'room_id=17&card_id={user_card}&bye=F'".format(user_card=user_card)).read()
