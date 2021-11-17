@@ -43,6 +43,10 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+
+    user_id = event.source.user_id # 哪一個使用者傳的訊息
+    profile = line_bot_api.get_profile(user_id) # 取得使用者個人資料
+    user_name = profile.display_name # 他的帳號名稱
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=event.message.text))
@@ -57,8 +61,7 @@ def handle_message(event):
         b = b[1:-1]
         d = bytes(b, encoding='utf-8')
         
-        line_bot_api.reply_message(
-          event.reply_token,
+        line_bot_api.push_message(user_id,
           TextSendMessage(text=d.decode('unicode_escape'))) 
 
 if __name__ == "__main__":
