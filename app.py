@@ -22,6 +22,22 @@ line_bot_api.push_message('U5eb2d6c5020d6fe62e4f1d1e0f15e406', TextSendMessage(t
 # 推給某個User
 # line_bot_api.push_message('UserID', TextSendMessage(text='(後臺訊息)啟動豆芽探索共學ECHO機器人!'))
 
+def push_aiamenber_csv():
+
+  run_cmd = lambda cmd_lis:[os.popen(i).read() for i in cmd_lis.split('\n')]
+
+  cmd_lis = '''ls
+  cp ../aiaMenber.csv .
+  git config --global user.email "junew@aiacademy.tw"
+  git config --global user.name "junew"
+  git add .
+  git commit -m'update aia menber csv'
+  git push https://junew:a5731370081@gitlab.aiacademy.tw/junew/AIA_chatbot.git
+  '''
+  os.chdir('AIA_chatbot')
+  run_cmd(cmd_lis)
+  os.chdir('..')
+
 
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -59,10 +75,10 @@ def handle_message(event):
         
         if user_name in df.profileName.values:
             index = df['profileName'] == user_name
-            df.loc[index, 'card'] = event.message.text
+            df.loc[index, 'card'] = str(event.message.text)
             msg += str(df.loc[index, :].values[0])
         else:
-            lis = [user_name, event.message.text]
+            lis = [user_name, str(event.message.text)]
             df.loc[len(df)] = lis
             msg += str(lis)
 
@@ -70,7 +86,7 @@ def handle_message(event):
         key = None
     elif event.message.text == '註冊':
         msg = '為您註冊資料庫，請輸入(更新)卡號...'
-        line_bot_api.push_message(user_id, TextSendMessage(text=msg)) 
+        line_bot_api.push_message(user_id, TextSendMessage(text=msg))
         key = '註冊'
     
     if event.message.text == '我的卡號':
@@ -113,12 +129,20 @@ def handle_message(event):
     else:
       pass
     
-    df.to_csv('aiaMenber.csv', index=False)
     
+    df_origin = pd.read_csv('aiaMenber.csv')
+    df_origin.loc[:,'card'] = df_origin.card.astype(object)
+    length_diff = df.merge(df_origin,indicator = True, how='left').loc[lambda x : x['_merge']!='both'].shape[0]
+    if length_diff > 0:
+      df.to_csv('aiaMenber.csv', index=False)
+      push_aiamenber_csv()
+
 
 if __name__ == "__main__":
+    os.system('git clone https://junew:a5731370081@gitlab.aiacademy.tw/junew/AIA_chatbot.git')
     try:
-      df = pd.read_csv('aiaMenber.csv')
+      df = pd.read_csv('AIA_chatbot/aiaMenber.csv')
+      df.to_csv('aiaMenber.csv', index=False)
     except FileNotFoundError:
       df = pd.DataFrame([], columns=['profileName', 'card'])
       df.to_csv('aiaMenber.csv', index=False)
